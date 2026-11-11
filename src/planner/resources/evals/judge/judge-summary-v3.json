@@ -1,0 +1,17 @@
+{
+  "prompt_version": "v3",
+  "created_at": "2026-11-11T23:06:40+00:00",
+  "model": "anthropic:claude-opus-5",
+  "counts": {
+    "TP": 4,
+    "FP": 0,
+    "FN": 0,
+    "TN": 22
+  },
+  "total": 26,
+  "accuracy": 1.0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "errors": 0,
+  "disagreements": []
+}

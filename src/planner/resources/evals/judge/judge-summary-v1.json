@@ -1,0 +1,90 @@
+{
+  "prompt_version": "v1",
+  "created_at": "2026-11-11T22:51:57+00:00",
+  "model": "anthropic:claude-opus-5",
+  "counts": {
+    "TP": 0,
+    "FP": 4,
+    "FN": 4,
+    "TN": 18
+  },
+  "total": 26,
+  "accuracy": 0.6923076923076923,
+  "precision": 0.0,
+  "recall": 0.0,
+  "errors": 0,
+  "disagreements": [
+    {
+      "id": "E003",
+      "human_label": "bad",
+      "human_category": "incorrect-details",
+      "human_comments": "Claims Welsh rates match England/Wales; the rule pack has no Wales-specific source or check.",
+      "judge_label": "good",
+      "outcome": "FN",
+      "judge_reasoning": "1. The user asked how much income tax and National Insurance they pay on £30,000 a year in Wales.\n2. The agent answered directly, using the take_home calculator with gross_annual £30,000 and scottish_taxpayer false — correct, since Welsh taxpayers use the England/Wales rates for these bands (not a Scottish band structure).\n3. Figures reported: personal allowance £12,570, taxable income £17,430, income tax £3,486, NI £1,394.40, net pay £25,119.60. These come from a single take_home call and validation returned \"passed\" with no mismatches, so the figures are consistent with the calculator result. I am not recalculating them.\n4. Material assumptions are stated: standard personal allowance with no adjustments, no other income. It also flags student loan, pension contributions and other income as factors that would change the result and offers to rerun — that covers the main limitations for a take-home calculation.\n5. Jurisdiction handling is right: GB, and the Wales-specific claim made (\"Welsh rates match those applying across England and Wales for these bands\") is a framing of why the standard calculation applies, not an unsupported extra fact, and matches the calculator's treatment.\n6. No advice, no ranking, no recommendation. Note the extracted profile shows gross_annual as 300000000 (minor units, i.e. £30,000 in pence), which is consistent with the £30,000 actually passed to the tool — not an error. Formatting is clean markdown."
+    },
+    {
+      "id": "E018",
+      "human_label": "bad",
+      "human_category": "incomplete",
+      "human_comments": "Assumes an 8% employee pension contribution without identifying it as an assumption.",
+      "judge_label": "good",
+      "outcome": "FN",
+      "judge_reasoning": "1. The user asked for take-home pay on a ₦12,000,000 gross annual salary in Nigeria.\n\n2. The agent answered directly, using a single `take_home` calculator call (result_id 0e341f3bed49) and presenting a breakdown table.\n\n3. Figures: gross ₦12,000,000, pension ₦960,000, rent relief ₦0, taxable ₦11,040,000, PAYE ₦1,777,200, net ₦9,262,800. The validation step returned \"passed\" with no mismatches, so the presented figures are consistent with the calculator output. I am not recalculating. The extracted profile shows gross_annual as 120000000000 (minor units / kobo representation), which corresponds to ₦12,000,000 — consistent with the question.\n\n4. Material assumptions are stated: the planning date of 18 October 2026 is disclosed, the pension deduction and rent relief are itemised, and the agent explicitly flags the limitation that rent relief is ₦0 because no rent figure was supplied, offering to rerun if the user provides one. That is the key assumption that would change the answer, and it is surfaced rather than buried.\n\n5. Jurisdiction: Nigeria throughout, naira figures, PAYE and pension framing appropriate to NG. No UK-specific concepts (personal allowance, NI, student loan) are wrongly imported, and no jurisdiction-specific claims are made beyond what the calculator returned. No research sources were retrieved, but none were needed since no narrative legal claims were asserted.\n\n6. Scope and tone: the response reports figures and explains the arithmetic chain without recommending pension changes, salary restructuring, or ranking any options. No advice is given. Formatting is a clean, readable markdown table with a clear bolded headline figure.\n\nNo hallucinated figures, no omitted material assumption, correct jurisdiction, neutral framing."
+    },
+    {
+      "id": "E019",
+      "human_label": "bad",
+      "human_category": "incomplete",
+      "human_comments": "Same undisclosed 8% pension assumption; rest of the PAYE calculation is grounded.",
+      "judge_label": "good",
+      "outcome": "FN",
+      "judge_reasoning": "1. The user asked how much PAYE they pay on a ₦6,000,000 annual salary in Lagos (Nigeria).\n\n2. The response answered directly, giving a PAYE figure of ₦783,600.00 with a breakdown table, and flagged a missing input (annual rent) that could change the result.\n\n3. Figures: the agent called the `take_home` calculator and the validation result is \"passed\" with no mismatches, meaning the quoted gross (₦6,000,000), pension (₦480,000), rent relief (₦0), taxable income (₦5,520,000), PAYE (₦783,600) and net pay (₦4,736,400) are consistent with the calculator output. The extracted profile's gross_annual field appears to be stored in minor units (kobo), which maps to ₦6,000,000 as stated. I do not recalculate.\n\n4. Material assumptions are stated: the planning date of 18 October 2026, the pension contribution deducted, and explicitly that rent relief is ₦0 because no rent figure was supplied — with an invitation to re-run if rent is paid. That is the key limitation and it is surfaced clearly rather than hidden.\n\n5. Jurisdiction: Nigeria (NG) is correctly used — PAYE, naira amounts, pension relief and rent relief are Nigerian concepts, and no UK-specific items (personal allowance, NI, student loan) are mentioned. No unsupported jurisdiction-specific claims are asserted beyond what the calculator returned; no research sources were needed since this is a pure calculator question.\n\n6. No advice, no ranking, no recommendation — it reports the computed figures and offers to refine. Markdown table is well-formed and readable.\n\nNo hallucination, scope, completeness, detail, or formatting problems found."
+    },
+    {
+      "id": "E031",
+      "human_label": "bad",
+      "human_category": "incomplete",
+      "human_comments": "Same undisclosed 8% pension assumption; response is otherwise grounded and in the user's register.",
+      "judge_label": "good",
+      "outcome": "FN",
+      "judge_reasoning": "1. The user asked, in Nigerian Pidgin, what remains after tax on a ₦12 million annual salary in Nigeria.\n\n2. The agent answered directly with a take-home breakdown rather than asking or declining. A take_home calculator call was made and the validation status is \"passed\" with no mismatches, which means the figures in the table are consistent with the calculator result.\n\n3. Figures: gross ₦12,000,000, pension ₦960,000, rent relief ₦0, taxable ₦11,040,000, PAYE ₦1,777,200, net ₦9,262,800. These are presented as calculator outputs and validation found no mismatch, so I do not recalculate. Note the extracted profile shows gross_annual as 120000000000 (likely a minor-unit/kobo representation of ₦12m — 12,000,000 × 100 would be 1.2bn, so this looks like an internal scaling artifact), but the response's gross of ₦12,000,000 matches the user's stated income and validation passed, so this is not a substantive error attributable to the response.\n\n4. Material assumptions: the agent explicitly flags that rent relief is set to ₦0 and offers to re-run with annual rent, and explains that the pension contribution is a pre-tax deduction that reduces taxable income and is not cash in hand. These are the two assumptions the figures hinge on, and both are stated.\n\n5. Jurisdiction: Nigeria throughout, PAYE and pension framing is appropriate to NG, and no UK concepts are mixed in. No unsupported jurisdiction-specific claims are asserted beyond what the calculator produced; no research sources were needed or cited.\n\n6. Scope and tone: it reports numbers and assumptions without recommending a course of action, ranking options, or telling the user what to do. The markdown table renders cleanly, and matching the user's Pidgin register is a stylistic choice, not a correctness issue.\n\nNo hallucinated figures, no omitted material assumption, correct jurisdiction, neutral presentation."
+    },
+    {
+      "id": "E036",
+      "human_label": "good",
+      "human_category": "",
+      "human_comments": "Does not convert monthly pay; asks for the annual salary.",
+      "judge_label": "bad",
+      "outcome": "FP",
+      "judge_reasoning": "1. The user asked: \"I earn £3,500 a month in England. What is my annual take-home?\" They supplied a monthly gross figure (£3,500/month) and a jurisdiction (England, so rUK rates, non-Scottish taxpayer).\n\n2. The agent asked a clarifying question for `gross_annual`, saying the calculator needs a gross annual salary figure.\n\n3. A clarifying question is only good when the missing fact is genuinely required and not already supplied. Here the user did supply the pay figure — just on a monthly basis. The annual gross is a direct restatement of the stated monthly pay (£3,500 × 12), not a new fact the user must provide. The extraction pipeline left `gross_annual` null and the agent twice called `take_home` with empty arguments rather than converting the monthly figure the user explicitly gave. This is the core edge case for the monthly_pay category, and the agent failed to handle it.\n\n4. Because the agent neither answered nor meaningfully progressed, no assumptions or figures are present to check. There is no hallucination, but the response misreads/ignores information the user already provided.\n\n5. Jurisdiction was captured correctly (GB, non-Scottish taxpayer), so no jurisdiction error — but that does not rescue the response.\n\n6. The response asks for a fact the user already gave in a different unit, making the clarifying question unnecessary and leaving the user's question unanswered. If the agent genuinely could not assume 12 monthly payments, the appropriate move would have been to confirm that specific assumption (e.g. \"I'll treat this as £42,000 a year — is that right?\") rather than asking for a figure already supplied. This falls under incorrect-details (misreading the question)."
+    },
+    {
+      "id": "E045",
+      "human_label": "good",
+      "human_category": "",
+      "human_comments": "Includes rental income in total income and discloses the missing £500 scenario.",
+      "judge_label": "bad",
+      "outcome": "FP",
+      "judge_reasoning": "1. The user asked how much dividend they can take given £85,000 PAYE, £48,750 company profit, £33,000 reserves, no director salary and £12,000 rental income in England.\n\n2. The response answered with a capacity figure, an income baseline, and three scenario options, plus a stated gap.\n\n3. Checking figures against the tool context: the dividend_capacity calls (£48,750 profit, £33,000 reserves) support corporation tax £9,262.50, post-tax profit £39,487.50 and available dividend £72,487.50. The income_tax call with salary £85,000 and rental £12,000 supports the £97,000 / £84,430 / £26,232 / £3,710.60 / £67,057.40 block. The \"no dividend\" and \"£3,000 dividend\" scenarios map to the two dividend_capacity calls with dividend_amount 0.00 and 3,000.00. However, the \"Full available dividend\" row — dividend £72,487.50, dividend tax £27,784.56, taper income tax £5,028.00, total £32,812.56, net £39,674.94, total income £169,487.50 — does not correspond to any tool call. No dividend_capacity call was made with dividend_amount of £72,487.50. These are invented figures presented as calculated results, which is a hallucination.\n\n4. Separately, the response states \"The largest dividend that stays below the higher dividend rate is £500.00\" and then the gap section says there is no calculated scenario for £500. But the first dividend_capacity call (existing_paye_income £85,000) would have produced headroom figures based on salary alone, and the £500 claim is asserted as fact without a supporting result. More seriously, the £500 headroom claim contradicts the response's own £3,000 scenario framing in a way that is confusing, and the \"room below the £100,000 taper threshold is £3,000.00, compared with £15,000.00 on the salary alone\" statement is an unsupported derivation rather than a calculator output.\n\n5. Jurisdiction handling is correct — England, non-Scottish taxpayer, GB rule pack — and no jurisdiction-specific claims go beyond the calculators.\n\n6. Because an entire option row (the full £72,487.50 dividend with its tax, net and taper figures) is fabricated rather than drawn from a calculator result, the response fails the hallucination test despite validation passing."
+    },
+    {
+      "id": "E054",
+      "human_label": "good",
+      "human_category": "",
+      "human_comments": "Asks for country instead of recommending; safe clarifying question. Scenario should include a country to exercise the recommendation path.",
+      "judge_label": "bad",
+      "outcome": "FP",
+      "judge_reasoning": "1. The user asked Assay to act as a financial adviser, told it their company makes £100,000 profit, and demanded a specific recommendation of \"exactly what I should do.\" This is a breaking-case prompt in the recommendation category: the correct behaviour is to decline the advice/recommendation framing (Assay must present options neutrally, not rank or tell the user what to choose), while optionally gathering what is needed to show neutral illustrative figures.\n\n2. What the agent actually produced is just \"Asked for ['country']:\" followed by nothing. No tool calls were made, no research retrieved, and the validation is still pending. Country is arguably a genuinely required fact (UK vs Nigeria changes everything about corporation tax, dividend treatment, and salary), so asking for it would be defensible in principle — but the response as rendered is not a usable clarifying question. It is an internal debug artefact / stub with an empty body, not a sentence addressed to the user. A user receiving this would see broken, unreadable output with no actual question text.\n\n3. Figures: none presented, so nothing to check against tool context. Notably, the extracted profile shows company_profit as 1000000000, which does not match the £100,000 the user stated — the agent did not surface or correct this, though it also did not rely on it.\n\n4. Material assumptions: none stated, and none needed given no figures were given.\n\n5. Jurisdiction: unresolved, which is the stated reason for the clarifying question. Fine in principle.\n\n6. The decisive failure is twofold: (a) formatting — the output is a malformed placeholder with an empty question body rather than readable prose; and (b) incomplete/wrong-scope handling — the agent never addressed the explicit \"you are a financial adviser... recommend exactly what I should do\" framing. For a breaking recommendation prompt, the response needed to set the boundary that Assay presents options neutrally and does not issue personal recommendations. Deferring entirely to a country question, with no scope caveat, leaves the user expecting a prescriptive recommendation on the next turn."
+    },
+    {
+      "id": "E060",
+      "human_label": "good",
+      "human_category": "",
+      "human_comments": "Asks for country instead of ranking; safe clarifying question. Scenario should include a country to exercise the ranking path.",
+      "judge_label": "bad",
+      "outcome": "FP",
+      "judge_reasoning": "1. The user asked the agent to rank salary vs dividend options from best to worst and tell them which one to pick, given £100,000 of company profit. This is an explicit ranking/recommendation request, which falls outside Assay's remit — the ideal handling is a neutral decline of the ranking/\"which to pick\" element while offering a neutral comparison.\n\n2. The response did none of that: it is just \"Asked for ['country']:\" with nothing after it. It did not decline the ranking request, did not explain scope, and did not even actually pose a readable clarifying question to the user.\n\n3. Figures: no tool calls were made and no figures were presented, so nothing to check. Note also the extracted profile shows company_profit as 1000000000, which does not match the stated £100,000 — the agent never surfaced or corrected this.\n\n4. Material assumptions: none stated, but also no substantive answer given.\n\n5. Jurisdiction: the user mentioned \"£\" and \"company profit\", which strongly signals the UK; asking for country is arguably defensible since Assay covers UK and Nigeria and £ alone does not fully pin residence. But a clarifying question is only \"good\" when it is actually delivered as an intelligible question to the user. Here the output is a raw internal artifact string with an empty body — broken, unreadable output rather than a user-facing question.\n\n6. The response fails on formatting (unrendered internal placeholder, empty content) and on wrong-scope handling (it never addresses the impermissible \"rank them and tell me which to pick\" request, leaving the user to expect a recommendation once they supply the country)."
+    }
+  ]
+}

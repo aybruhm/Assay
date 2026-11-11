@@ -1,0 +1,27 @@
+{
+  "prompt_version": "v2",
+  "created_at": "2026-11-11T23:05:16+00:00",
+  "model": "anthropic:claude-opus-5",
+  "counts": {
+    "TP": 4,
+    "FP": 1,
+    "FN": 0,
+    "TN": 21
+  },
+  "total": 26,
+  "accuracy": 0.9615384615384616,
+  "precision": 0.8,
+  "recall": 1.0,
+  "errors": 0,
+  "disagreements": [
+    {
+      "id": "E020",
+      "human_label": "good",
+      "human_category": "",
+      "human_comments": "Grounded personal allowance with gov.uk citations.",
+      "judge_label": "bad",
+      "outcome": "FP",
+      "judge_reasoning": "1. The user asked what gov.uk says about the personal allowance for 2026-27 in England.\n\n2. The response answered with a figure (£12,570.00) plus two GOV.UK source links, and offered further lookups.\n\n3. Figures: the £12,570.00 came from the lookup_rule call on gb.income_tax.personal_allowance, and validation status is \"passed\" with no mismatches, so the figure is supported. The sources cited match the two URLs in RESEARCH_SOURCES, so no invented sources.\n\n4. Material assumptions: it states the standard Personal Allowance applies and offers to look up the taper threshold, which is an acceptable flag of the limitation. Jurisdiction/tax year (2026-27, England, non-Scottish taxpayer) matches the extracted profile.\n\n5. Jurisdiction claims: the response asserts \"the England, Wales and Northern Ireland rates apply.\" Per the guidance, the GB rule pack does not contain a Wales-specific rate, and a response that asserts Welsh rates match England without a Wales-specific source is incorrect-details. The cited gov.uk page is noted only as saying bands differ in Scotland; nothing in the retrieved sources or rule lookup supports the explicit Wales grouping claim. The user asked only about England, so extending the claim to Wales (and Northern Ireland) is an unsupported jurisdiction-specific assertion.\n\n6. Because of that unsupported Wales claim, the response falls into incorrect-details despite otherwise correct figures, sourcing, and neutral presentation."
+    }
+  ]
+}
