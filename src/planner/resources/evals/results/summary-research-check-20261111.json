@@ -1,0 +1,17 @@
+{
+  "run_id": "research-check-20261111",
+  "model": "anthropic:claude-opus-5",
+  "total": 1,
+  "by_type": {
+    "happy_path": {
+      "pass": 1
+    }
+  },
+  "by_category": {
+    "research": {
+      "pass": 1
+    }
+  },
+  "failures": [],
+  "duration_s": 15.2
+}

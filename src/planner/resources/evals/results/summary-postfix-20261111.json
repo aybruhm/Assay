@@ -1,0 +1,35 @@
+{
+  "run_id": "postfix-20261111",
+  "model": "anthropic:claude-opus-5",
+  "total": 7,
+  "by_type": {
+    "breaking": {
+      "pass": 1
+    },
+    "edge_case": {
+      "pass": 2
+    },
+    "happy_path": {
+      "pass": 4
+    }
+  },
+  "by_category": {
+    "missing_reserves": {
+      "pass": 1
+    },
+    "monthly_pay": {
+      "pass": 1
+    },
+    "nigeria_take_home": {
+      "pass": 2
+    },
+    "rule_lookup": {
+      "pass": 2
+    },
+    "unknown_rule": {
+      "pass": 1
+    }
+  },
+  "failures": [],
+  "duration_s": 47.95
+}

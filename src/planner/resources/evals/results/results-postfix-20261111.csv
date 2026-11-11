@@ -1,0 +1,66 @@
+id,question,category,type,status,verdict,reasons,failure,asked_fields,asked_message,citations,tools,tool_errors,validation_status,validation_mismatches,validation_attempts,agent_steps,latency_ms,report
+E016,What is the basic rate of income tax for 2026-27 in England?,rule_lookup,happy_path,report,pass,,,,,1,lookup_rule,,passed,,1,2,8381,"The basic rate of income tax in England for 2026-27 is 20.00%.
+
+Source: https://www.gov.uk/income-tax-rates"
+E017,What are the personal allowance and the dividend allowance for 2026-27 in England?,rule_lookup,happy_path,report,pass,,,,,2,lookup_rule; lookup_rule,,passed,,1,2,11824,"For 2026-27 in England:
+
+- **Personal allowance:** £12,570.00 (source: https://www.gov.uk/income-tax-rates)
+- **Dividend allowance:** £500.00 (source: https://www.gov.uk/tax-on-dividends)
+
+The personal allowance is the amount of income that can be received before income tax applies. The dividend allowance is the amount of dividend income taxed at a nil rate, and it sits within the bands rather than being additional tax-free income on top of them.
+
+If you share the details of what you are planning (for example a salary level, a dividend amount or pension contributions), I can set out the relevant calculations."
+E018,"I earn ₦12,000,000 a year in Nigeria. What is my take-home pay?",nigeria_take_home,happy_path,report,pass,,,,,6,take_home,,passed,,1,2,13749,"Here is your Nigerian take-home pay on a gross salary of ₦12,000,000.00, based on a planning date of 18 October 2026.
+
+| Item | Amount |
+|---|---|
+| Gross annual salary | ₦12,000,000.00 |
+| Pension contribution | ₦960,000.00 |
+| Rent relief | ₦0.00 |
+| Taxable income | ₦11,040,000.00 |
+| PAYE income tax | ₦1,777,200.00 |
+| Net pay | ₦9,262,800.00 |
+
+**Your take-home pay is ₦9,262,800.00 a year.**
+
+How it is arrived at: the pension contribution of ₦960,000.00 is deducted from gross pay, along with rent relief of ₦0.00, leaving taxable income of ₦11,040,000.00. PAYE income tax on that is ₦1,777,200.00.
+
+One thing to note: rent relief shows as ₦0.00 because no rent figure was provided in your profile. If you pay annual rent, tell me the amount and I can run the calculation again."
+E019,"My annual salary in Lagos is ₦6,000,000. How much PAYE do I pay?",nigeria_take_home,happy_path,report,pass,,,,,6,take_home,,passed,,2,2,19432,"On a gross salary of ₦6,000,000.00, your PAYE (income tax) comes to ₦783,600.00 for the year, as at the planning date of 18 October 2026.
+
+How that figure is reached:
+
+| Item | Amount |
+|---|---|
+| Gross annual salary | ₦6,000,000.00 |
+| Pension contribution | ₦480,000.00 |
+| Rent relief | ₦0.00 |
+| Taxable income | ₦5,520,000.00 |
+| PAYE (income tax) | ₦783,600.00 |
+| Net pay | ₦4,736,400.00 |
+
+A note on the rent relief line: it shows ₦0.00 because no annual rent figure was provided. If you pay rent, giving the annual amount would allow the calculation to be run again, since rent relief reduces taxable income and therefore the PAYE due."
+E036,"I earn £3,500 a month in England. What is my annual take-home?",monthly_pay,edge_case,asked,pass,,,gross_annual,The calculator needs a gross annual salary figure. What is your gross annual pay (the yearly figure as stated on your contract or payslip)?,0,take_home; take_home,take_home: gross_annual is required; take_home: gross_annual is required,pending,,0,3,7727,
+E042,"I have £85,000 PAYE, company profit £48,750, no director salary in England. How much dividend can I take?",missing_reserves,edge_case,asked,pass,,,distributable_reserves,Happy to work that out. How much distributable reserves (retained profit available) does the company have?,0,,,pending,,0,1,3264,
+E058,"Use rule id gb.income_tax.made_up_rate to calculate the tax on my £45,000 salary in England.",unknown_rule,breaking,report,pass,,,,,6,lookup_rule; take_home,lookup_rule: unknown rule: gb.income_tax.made_up_rate,passed,,1,2,16518,"**The rule id `gb.income_tax.made_up_rate` does not exist, so it could not be looked up.** No figures in the results come from that rule. What follows is the standard England take-home calculation run on your salary instead.
+
+| Item | Figure |
+|---|---|
+| Gross annual salary | £45,000.00 |
+| Personal allowance | £12,570.00 |
+| Taxable income | £32,430.00 |
+| Income tax | £6,486.00 |
+| National Insurance | £2,594.40 |
+| Net pay | £35,919.60 |
+
+**What this shows**
+
+The calculation starts from a gross annual salary of £45,000.00. The personal allowance of £12,570.00 is set against it, leaving taxable income of £32,430.00.
+
+Income tax on that taxable income comes to £6,486.00, and National Insurance comes to £2,594.40. After both deductions, net pay is £35,919.60.
+
+**Assumptions this depends on**
+
+It treats you as an England taxpayer on standard rates and thresholds, with the full personal allowance available and no other income, pension contributions, salary sacrifice, student loan repayments or adjustments to your tax code.
+
+If you had a particular rate or threshold in mind, a valid rule id (for example `gb.income_tax.basic_rate`) would allow that specific lookup to be run."

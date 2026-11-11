@@ -1,0 +1,29 @@
+{
+  "run_id": "shorthand-20261111",
+  "model": "anthropic:claude-opus-5",
+  "total": 8,
+  "by_type": {
+    "varied_phrasing": {
+      "pass": 8
+    }
+  },
+  "by_category": {
+    "dividend_capacity": {
+      "pass": 1
+    },
+    "nigeria_take_home": {
+      "pass": 1
+    },
+    "pension": {
+      "pass": 1
+    },
+    "student_loan": {
+      "pass": 1
+    },
+    "take_home": {
+      "pass": 4
+    }
+  },
+  "failures": [],
+  "duration_s": 101.22
+}

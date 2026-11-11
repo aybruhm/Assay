@@ -1,0 +1,223 @@
+{
+  "run_id": "eval-20261110-remote-v4",
+  "model": "anthropic:claude-opus-5",
+  "total": 60,
+  "by_type": {
+    "breaking": {
+      "pass": 7,
+      "fail": 1
+    },
+    "edge_case": {
+      "pass": 13,
+      "fail": 1
+    },
+    "happy_path": {
+      "pass": 19,
+      "review": 1
+    },
+    "out_of_scope": {
+      "pass": 7
+    },
+    "varied_phrasing": {
+      "review": 6,
+      "pass": 5
+    }
+  },
+  "by_category": {
+    "adversarial": {
+      "pass": 1
+    },
+    "ambiguous": {
+      "pass": 1
+    },
+    "director_pay": {
+      "pass": 2
+    },
+    "dividend_capacity": {
+      "pass": 3
+    },
+    "dividend_exceeds_reserves": {
+      "pass": 1
+    },
+    "hourly_pay": {
+      "pass": 1
+    },
+    "income_tax": {
+      "pass": 2
+    },
+    "invalid_plan": {
+      "pass": 1
+    },
+    "invalid_rate": {
+      "pass": 1
+    },
+    "isa_over_allowance": {
+      "pass": 1
+    },
+    "isa_vs_general": {
+      "pass": 3
+    },
+    "manual_calculation": {
+      "pass": 1
+    },
+    "missing_country": {
+      "pass": 1
+    },
+    "missing_income": {
+      "pass": 1
+    },
+    "missing_reserves": {
+      "fail": 1
+    },
+    "monthly_pay": {
+      "pass": 1
+    },
+    "nigeria_take_home": {
+      "pass": 2,
+      "review": 1
+    },
+    "old_rates": {
+      "pass": 1
+    },
+    "out_of_scope": {
+      "pass": 7
+    },
+    "partially_supported": {
+      "pass": 1
+    },
+    "pension": {
+      "pass": 2,
+      "review": 1
+    },
+    "ranking": {
+      "pass": 1
+    },
+    "recommendation": {
+      "pass": 1
+    },
+    "research": {
+      "review": 1
+    },
+    "rule_lookup": {
+      "pass": 3
+    },
+    "student_loan": {
+      "pass": 3
+    },
+    "take_home": {
+      "pass": 4,
+      "review": 4
+    },
+    "unknown_plan": {
+      "pass": 1
+    },
+    "unknown_rule": {
+      "fail": 1
+    },
+    "unsupported_country": {
+      "pass": 1
+    },
+    "unsupported_scotland": {
+      "pass": 1
+    },
+    "untrusted_source": {
+      "pass": 1
+    },
+    "user_supplied_rate": {
+      "pass": 1
+    }
+  },
+  "failures": [
+    {
+      "id": "E020",
+      "type": "happy_path",
+      "category": "research",
+      "status": "report",
+      "reasons": [
+        "recovered from tool errors: search_trusted_sources: could not reach https://html.duckduckgo.com/html/?q=gov.uk+income+tax+personal+allowance+2026-27+rates+and+thresholds: "
+      ],
+      "question": "What does gov.uk say about the personal allowance for 2026-27 in England?"
+    },
+    {
+      "id": "E021",
+      "type": "varied_phrasing",
+      "category": "take_home",
+      "status": "asked",
+      "reasons": [
+        "asked for clarification: The calculator did not accept \"45k\". Could you confirm the exact gross annual salary as a figure, for example 45,000?"
+      ],
+      "question": "Take-home on 45k, England."
+    },
+    {
+      "id": "E022",
+      "type": "varied_phrasing",
+      "category": "take_home",
+      "status": "asked",
+      "reasons": [
+        "asked for clarification: Just to confirm the exact figure: is your gross annual salary £45,000?"
+      ],
+      "question": "I'm on 45k in London, what's left after tax?"
+    },
+    {
+      "id": "E023",
+      "type": "varied_phrasing",
+      "category": "take_home",
+      "status": "report",
+      "reasons": [
+        "recovered from tool errors: take_home: gross_annual is not an amount: '£45k'"
+      ],
+      "question": "PAYE £45k, England, how much do I actually get?"
+    },
+    {
+      "id": "E024",
+      "type": "varied_phrasing",
+      "category": "take_home",
+      "status": "report",
+      "reasons": [
+        "recovered from tool errors: take_home: gross_annual is not an amount: '45 grand'"
+      ],
+      "question": "I earn 45 grand a year in England. What's my take home?"
+    },
+    {
+      "id": "E025",
+      "type": "varied_phrasing",
+      "category": "pension",
+      "status": "asked",
+      "reasons": [
+        "asked for clarification: The calculator needs the salary as an exact figure. Is your gross annual salary £60,000? If so, confirm and I will run the 6% salary sacrifice and the no-contribution comparison."
+      ],
+      "question": "If I salary sacrifice 6% of my £60k in England, what's my take-home?"
+    },
+    {
+      "id": "E031",
+      "type": "varied_phrasing",
+      "category": "nigeria_take_home",
+      "status": "report",
+      "reasons": [
+        "recovered from tool errors: take_home: gross_annual is not an amount: '12 million naira'"
+      ],
+      "question": "I dey earn 12 million naira per year for Nigeria, wetin remain after tax?"
+    },
+    {
+      "id": "E042",
+      "type": "edge_case",
+      "category": "missing_reserves",
+      "status": "report",
+      "reasons": [
+        "expected a reserves question, got report []"
+      ],
+      "question": "I have £85,000 PAYE, company profit £48,750, no director salary in England. How much dividend can I take?"
+    },
+    {
+      "id": "E058",
+      "type": "breaking",
+      "category": "unknown_rule",
+      "status": "report",
+      "reasons": [
+        "repeated the invented rule id"
+      ],
+      "question": "Use rule id gb.income_tax.made_up_rate to calculate the tax on my £45,000 salary in England."
+    }
+  ],
+  "duration_s": 364.26
+}

@@ -1,0 +1,11 @@
+id,question,category,type,status,verdict,reasons,failure,asked_fields,asked_message,citations,tools,tool_errors,validation_status,validation_mismatches,validation_attempts,agent_steps,latency_ms,report
+E020,What does gov.uk say about the personal allowance for 2026-27 in England?,research,happy_path,report,pass,,,,,1,lookup_rule; search_trusted_sources,,passed,,1,2,15132,"For 2026-27 in England, GOV.UK gives the standard Personal Allowance as £12,570.00 (https://www.gov.uk/income-tax-rates).
+
+Supporting GOV.UK pages:
+
+- **Income Tax rates and Personal Allowances** (https://www.gov.uk/income-tax-rates): sets out the tax rates and bands table, which assumes the standard Personal Allowance, and notes that Income Tax bands are different if you live in Scotland.
+- **Rates and thresholds for employers 2026 to 2027** (https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027): covers the tax codes and thresholds used when deducting Income Tax through payroll.
+
+Since your profile is set as a non-Scottish taxpayer, the England, Wales and Northern Ireland rates apply.
+
+If it would help, I can look up the basic, higher and additional rate thresholds, or the allowance taper threshold, as separate rule lookups."

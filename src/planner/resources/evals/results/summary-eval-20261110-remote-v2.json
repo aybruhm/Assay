@@ -1,0 +1,330 @@
+{
+  "run_id": "eval-20261110-remote-v2",
+  "model": "anthropic:claude-opus-5",
+  "total": 60,
+  "by_type": {
+    "breaking": {
+      "pass": 7,
+      "review": 1
+    },
+    "edge_case": {
+      "pass": 11,
+      "fail": 3
+    },
+    "happy_path": {
+      "pass": 16,
+      "fail": 4
+    },
+    "out_of_scope": {
+      "pass": 5,
+      "fail": 2
+    },
+    "varied_phrasing": {
+      "review": 7,
+      "fail": 2,
+      "pass": 2
+    }
+  },
+  "by_category": {
+    "adversarial": {
+      "pass": 1
+    },
+    "ambiguous": {
+      "pass": 1
+    },
+    "director_pay": {
+      "pass": 2
+    },
+    "dividend_capacity": {
+      "pass": 2,
+      "review": 1
+    },
+    "dividend_exceeds_reserves": {
+      "fail": 1
+    },
+    "hourly_pay": {
+      "pass": 1
+    },
+    "income_tax": {
+      "pass": 2
+    },
+    "invalid_plan": {
+      "pass": 1
+    },
+    "invalid_rate": {
+      "pass": 1
+    },
+    "isa_over_allowance": {
+      "pass": 1
+    },
+    "isa_vs_general": {
+      "pass": 2,
+      "fail": 1
+    },
+    "manual_calculation": {
+      "pass": 1
+    },
+    "missing_country": {
+      "pass": 1
+    },
+    "missing_income": {
+      "pass": 1
+    },
+    "missing_reserves": {
+      "fail": 1
+    },
+    "monthly_pay": {
+      "fail": 1
+    },
+    "nigeria_take_home": {
+      "fail": 2,
+      "review": 1
+    },
+    "old_rates": {
+      "review": 1
+    },
+    "out_of_scope": {
+      "pass": 5,
+      "fail": 2
+    },
+    "partially_supported": {
+      "pass": 1
+    },
+    "pension": {
+      "pass": 2,
+      "fail": 1
+    },
+    "ranking": {
+      "pass": 1
+    },
+    "recommendation": {
+      "pass": 1
+    },
+    "research": {
+      "pass": 1
+    },
+    "rule_lookup": {
+      "pass": 1,
+      "fail": 2
+    },
+    "student_loan": {
+      "pass": 2,
+      "review": 1
+    },
+    "take_home": {
+      "pass": 4,
+      "review": 4
+    },
+    "unknown_plan": {
+      "pass": 1
+    },
+    "unknown_rule": {
+      "pass": 1
+    },
+    "unsupported_country": {
+      "pass": 1
+    },
+    "unsupported_scotland": {
+      "pass": 1
+    },
+    "untrusted_source": {
+      "pass": 1
+    },
+    "user_supplied_rate": {
+      "pass": 1
+    }
+  },
+  "failures": [
+    {
+      "id": "E015",
+      "type": "happy_path",
+      "category": "isa_vs_general",
+      "status": "asked",
+      "reasons": [
+        "expected a report, got asked"
+      ],
+      "question": "I have £10,000 invested for 20 years at 7% and earn £60,000 in England. What is the difference between an ISA and a general account?"
+    },
+    {
+      "id": "E017",
+      "type": "happy_path",
+      "category": "rule_lookup",
+      "status": "failed",
+      "reasons": [
+        "expected a report, got failed"
+      ],
+      "question": "What are the personal allowance and the dividend allowance for 2026-27 in England?"
+    },
+    {
+      "id": "E018",
+      "type": "happy_path",
+      "category": "nigeria_take_home",
+      "status": "report",
+      "reasons": [
+        "expected tool ['take_home'], got []"
+      ],
+      "question": "I earn ₦12,000,000 a year in Nigeria. What is my take-home pay?"
+    },
+    {
+      "id": "E019",
+      "type": "happy_path",
+      "category": "nigeria_take_home",
+      "status": "asked",
+      "reasons": [
+        "expected a report, got asked"
+      ],
+      "question": "My annual salary in Lagos is ₦6,000,000. How much PAYE do I pay?"
+    },
+    {
+      "id": "E021",
+      "type": "varied_phrasing",
+      "category": "take_home",
+      "status": "report",
+      "reasons": [
+        "recovered from tool errors: take_home: gross_annual is not an amount: '45k'"
+      ],
+      "question": "Take-home on 45k, England."
+    },
+    {
+      "id": "E022",
+      "type": "varied_phrasing",
+      "category": "take_home",
+      "status": "asked",
+      "reasons": [
+        "asked for clarification: Just to confirm the figure before I run it: is your gross salary £45,000 a year?"
+      ],
+      "question": "I'm on 45k in London, what's left after tax?"
+    },
+    {
+      "id": "E023",
+      "type": "varied_phrasing",
+      "category": "take_home",
+      "status": "report",
+      "reasons": [
+        "recovered from tool errors: take_home: gross_annual is not an amount: '£45k'"
+      ],
+      "question": "PAYE £45k, England, how much do I actually get?"
+    },
+    {
+      "id": "E024",
+      "type": "varied_phrasing",
+      "category": "take_home",
+      "status": "report",
+      "reasons": [
+        "recovered from tool errors: take_home: gross_annual is not an amount: '45 grand'"
+      ],
+      "question": "I earn 45 grand a year in England. What's my take home?"
+    },
+    {
+      "id": "E025",
+      "type": "varied_phrasing",
+      "category": "pension",
+      "status": "failed",
+      "reasons": [
+        "expected a report, got failed"
+      ],
+      "question": "If I salary sacrifice 6% of my £60k in England, what's my take-home?"
+    },
+    {
+      "id": "E026",
+      "type": "varied_phrasing",
+      "category": "student_loan",
+      "status": "report",
+      "reasons": [
+        "recovered from tool errors: student_loan: gross_annual is not an amount: '£45k'; take_home: gross_annual is not an amount: '£45k'"
+      ],
+      "question": "I'm on £45k with a Plan 2 loan in England, what will they deduct?"
+    },
+    {
+      "id": "E027",
+      "type": "varied_phrasing",
+      "category": "rule_lookup",
+      "status": "failed",
+      "reasons": [
+        "expected a report, got failed"
+      ],
+      "question": "How much is the tax-free personal allowance this year in England?"
+    },
+    {
+      "id": "E028",
+      "type": "varied_phrasing",
+      "category": "dividend_capacity",
+      "status": "report",
+      "reasons": [
+        "recovered from tool errors: dividend_capacity: gross_annual is not an amount: '£85k'"
+      ],
+      "question": "I have an £85k job in England and my limited company has £48,750 profit plus £33k reserves. How much can I pay myself in divis?"
+    },
+    {
+      "id": "E031",
+      "type": "varied_phrasing",
+      "category": "nigeria_take_home",
+      "status": "report",
+      "reasons": [
+        "recovered from tool errors: take_home: gross_annual is not an amount: '12 million naira'"
+      ],
+      "question": "I dey earn 12 million naira per year for Nigeria, wetin remain after tax?"
+    },
+    {
+      "id": "E036",
+      "type": "edge_case",
+      "category": "monthly_pay",
+      "status": "report",
+      "reasons": [
+        "converted the input and produced figures, gross=None"
+      ],
+      "question": "I earn £3,500 a month in England. What is my annual take-home?"
+    },
+    {
+      "id": "E042",
+      "type": "edge_case",
+      "category": "missing_reserves",
+      "status": "report",
+      "reasons": [
+        "expected a reserves question, got report []"
+      ],
+      "question": "I have £85,000 PAYE, company profit £48,750, no director salary in England. How much dividend can I take?"
+    },
+    {
+      "id": "E043",
+      "type": "edge_case",
+      "category": "dividend_exceeds_reserves",
+      "status": "report",
+      "reasons": [
+        "produced figures for invalid input: 35"
+      ],
+      "question": "I have £85,000 PAYE, company profit £48,750, reserves £10,000 and no director salary in England. Can I take a £60,000 dividend?"
+    },
+    {
+      "id": "E048",
+      "type": "out_of_scope",
+      "category": "out_of_scope",
+      "status": "asked",
+      "reasons": [
+        "answered an out-of-scope question with figures: 0"
+      ],
+      "question": "I live in England. Should I invest in Tesla or Bitcoin?"
+    },
+    {
+      "id": "E050",
+      "type": "out_of_scope",
+      "category": "out_of_scope",
+      "status": "asked",
+      "reasons": [
+        "answered an out-of-scope question with figures: 0"
+      ],
+      "question": "I live in England. Which mortgage lender should I use?"
+    },
+    {
+      "id": "E056",
+      "type": "breaking",
+      "category": "old_rates",
+      "status": "report",
+      "reasons": [
+        "report may be using the requested old tax year"
+      ],
+      "question": "Use the 2019/20 tax rates for my £45,000 salary in England. What is my take-home?"
+    }
+  ],
+  "duration_s": 391.22
+}

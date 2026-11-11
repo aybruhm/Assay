@@ -1,0 +1,143 @@
+id,question,category,type,status,verdict,reasons,failure,asked_fields,asked_message,citations,tools,tool_errors,validation_status,validation_mismatches,validation_attempts,agent_steps,latency_ms,report
+E021,"Take-home on 45k, England.",take_home,varied_phrasing,report,pass,,,,,6,take_home,,passed,,1,2,13328,"On a gross salary of £45,000.00 in England, the take-home figures are:
+
+| Item | Amount |
+|---|---|
+| Gross annual salary | £45,000.00 |
+| Personal allowance | £12,570.00 |
+| Taxable income | £32,430.00 |
+| Income tax | £6,486.00 |
+| National Insurance | £2,594.40 |
+| **Net pay** | **£35,919.60** |
+
+How this works: the personal allowance of £12,570.00 is deducted from the gross salary, leaving taxable income of £32,430.00. Income tax of £6,486.00 and National Insurance of £2,594.40 come off the gross figure, leaving net pay of £35,919.60.
+
+This calculation assumes no pension contributions, no student loan repayments, and the standard tax code with the full personal allowance. If either a pension contribution or a student loan plan applies, that figure has not been calculated here and would change the net pay."
+E022,"I'm on 45k in London, what's left after tax?",take_home,varied_phrasing,report,pass,,,,,6,take_home,,passed,,2,2,24495,"On a gross salary of £45,000.00, here is the breakdown for 2026/27 as an England taxpayer:
+
+| Item | Amount |
+|---|---|
+| Personal allowance | £12,570.00 |
+| Taxable income | £32,430.00 |
+| Income tax | £6,486.00 |
+| National Insurance | £2,594.40 |
+| Net pay | £35,919.60 |
+
+What's left after income tax and National Insurance is £35,919.60.
+
+Assumptions behind these figures: England rates and thresholds, no pension contributions, and no student loan repayments. There is no London-specific adjustment in these figures, as income tax and National Insurance do not vary by region within England. If pension contributions or a student loan plan apply, those figures have not been calculated here and would change the net pay."
+E023,"PAYE £45k, England, how much do I actually get?",take_home,varied_phrasing,report,pass,,,,,6,take_home,,passed,,1,2,10434,"On a gross salary of £45,000.00 in England, the breakdown is:
+
+| Item | Amount |
+|---|---|
+| Gross salary | £45,000.00 |
+| Personal allowance | £12,570.00 |
+| Taxable income | £32,430.00 |
+| Income tax | £6,486.00 |
+| National Insurance | £2,594.40 |
+| Take-home pay | £35,919.60 |
+
+So the amount you actually receive over the year is £35,919.60.
+
+These figures assume no pension contributions, no student loan repayments and no other income or taxable benefits. If any of those apply, the result changes, and I can run it again with those details."
+E024,I earn 45 grand a year in England. What's my take home?,take_home,varied_phrasing,report,pass,,,,,6,take_home,,passed,,1,2,11180,"Your take home is **£35,919.60** a year.
+
+Here is how it breaks down for an England taxpayer:
+
+| Item | Amount |
+|---|---|
+| Gross salary | £45,000.00 |
+| Personal allowance | £12,570.00 |
+| Taxable income | £32,430.00 |
+| Income tax | £6,486.00 |
+| National Insurance | £2,594.40 |
+| Take home (net pay) | £35,919.60 |
+
+This assumes your salary is your only income, with no pension contributions and no student loan repayments. If any of those apply, let me know and the figures can be run again."
+E025,"If I salary sacrifice 6% of my £60k in England, what's my take-home?",pension,varied_phrasing,report,pass,,,,,13,pension; take_home,,passed,,1,2,22928,"**Take-home with the salary sacrifice: £43,269.40**, with £3,600.00 going into the pension.
+
+The figures cover two scenarios on gross annual pay of £60,000.00 in England. They are ordered by take-home ascending.
+
+| Scenario | Take-home | Into pension |
+|---|---|---|
+| Salary sacrifice arrangement | £43,269.40 | £3,600.00 |
+| No pension contribution | £45,357.40 | none |
+
+**Salary sacrifice arrangement**
+
+Gross pay of £60,000.00 less a pension contribution of £3,600.00 gives taxable pay of £56,400.00. After a personal allowance of £12,570.00, income tax is £9,992.00 and National Insurance is £3,138.60, leaving net pay of £43,269.40. This assumes the sacrifice reduces pay for both income tax and National Insurance purposes, and that the employer operates such an arrangement.
+
+**No pension contribution**
+
+Gross pay of £60,000.00 with a personal allowance of £12,570.00 gives taxable income of £47,430.00. Income tax is £11,432.00 and National Insurance is £3,210.60, leaving net pay of £45,357.40. This assumes no other deductions and England rates and thresholds.
+
+Both figures assume no student loan repayments, no taxable benefits and no other income. The calculations do not include any employer contribution or employer National Insurance saving that might be added to the pension."
+E026,"I'm on £45k with a Plan 2 loan in England, what will they deduct?",student_loan,varied_phrasing,report,pass,,,,,9,take_home; student_loan,,passed,,1,2,17941,"On a gross salary of £45,000.00, here is what comes off.
+
+**Income tax and National Insurance**
+
+| Item | Figure |
+|---|---|
+| Personal allowance | £12,570.00 |
+| Taxable income | £32,430.00 |
+| Income tax | £6,486.00 |
+| National Insurance | £2,594.40 |
+| Net pay before student loan | £35,919.60 |
+
+**Plan 2 student loan**
+
+| Item | Figure |
+|---|---|
+| Repayment threshold | £29,385.00 |
+| Repayment rate | 9.00% |
+| Annual repayment | £1,405.35 |
+
+The Plan 2 repayment applies to earnings above the threshold and is taken from pay after income tax and National Insurance, so it comes out of the £35,919.60 figure.
+
+Two things are not in the figures I have: the combined total of all three deductions, and the take-home figure after the student loan repayment has been subtracted. If you want either of those, they need to be calculated separately.
+
+I can also run the numbers with a pension contribution included, if you tell me the contribution rate."
+E028,"I have an £85k job in England and my limited company has £48,750 profit plus £33k reserves. How much can I pay myself in divis?",dividend_capacity,varied_phrasing,report,pass,,,,,37,dividend_capacity; dividend_capacity; dividend_capacity,,passed,,2,3,53719,"## How much is available
+
+The company's distributable total is **£72,487.50**, made up of reserves of £33,000.00 plus post-tax profit of £39,487.50, after corporation tax of £9,262.50 on profit of £48,750.00.
+
+Your existing PAYE income of £85,000.00 sits above the basic rate band, so only £500.00 of dividend falls below the higher dividend rate, matching the dividend allowance of £500.00.
+
+The calculator covers three dividend levels. They are listed below in ascending order of dividend amount.
+
+| Option | Dividend taken | Tax on the dividend | Net to you | Reserves left |
+|---|---|---|---|---|
+| No dividend this year | £0.00 | £0.00 | £0.00 | £72,487.50 |
+| Dividend capped at the taper threshold | £15,000.00 | £5,183.75 | £9,816.25 | £57,487.50 |
+| Full available dividend | £72,487.50 | £32,380.56 | £40,106.94 | £0.00 |
+
+### No dividend this year
+
+Nothing is declared, so total income stays at £85,000.00 and the personal allowance remains at £12,570.00. Dividend tax is £0.00 and taper income tax is £0.00. The company retains £72,487.50. This assumes no director salary is drawn: director salary is £0.00.
+
+### Dividend capped at the taper threshold
+
+A dividend of £15,000.00 brings total income to £100,000.00, level with the taper threshold of £100,000.00. Personal allowance lost to the dividend is £0.00, so taper income tax is £0.00 and dividend tax is £5,183.75. That leaves £9,816.25 in your hands and £57,487.50 in the company. It assumes no other income arrives to push total income past the threshold, and a director salary of £0.00.
+
+### Full available dividend
+
+Declaring the whole £72,487.50 takes total income to £157,487.50. The personal allowance is withdrawn in full, £12,570.00, giving taper income tax of £5,028.00 on top of dividend tax of £27,352.56. Net to you is £40,106.94 and the company is left with £0.00. This assumes the full reserve figure is genuinely distributable and that the company has no upcoming liabilities needing cash, and a director salary of £0.00.
+
+All three cases carry employer National Insurance of £0.00, since no director salary is taken."
+E031,"I dey earn 12 million naira per year for Nigeria, wetin remain after tax?",nigeria_take_home,varied_phrasing,report,pass,,,,,6,take_home,,passed,,1,2,14920,"Based on the Nigeria take-home calculation for your salary:
+
+| Item | Amount |
+|---|---|
+| Gross annual | ₦12,000,000.00 |
+| Pension contribution | ₦960,000.00 |
+| Rent relief | ₦0.00 |
+| Taxable income | ₦11,040,000.00 |
+| PAYE income tax | ₦1,777,200.00 |
+| Net pay | ₦9,262,800.00 |
+
+So after PAYE tax and the pension deduction, wetin remain for the year na ₦9,262,800.00.
+
+Two things to note about wetin this calculation assume:
+
+- Rent relief dey set as ₦0.00, meaning no rent was factored in. If you dey pay rent and you want am included, tell me your annual rent and I go run the calculation again.
+- The pension contribution of ₦960,000.00 is treated as a deduction before tax, so e reduce the taxable income to ₦11,040,000.00. That money still dey your pension account, e just no dey your monthly cash."
