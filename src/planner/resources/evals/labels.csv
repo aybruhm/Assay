@@ -1,0 +1,27 @@
+id,label,failure_category,comments,labeled_at
+E001,good,,"Clear take-home breakdown; figures validated and assumptions stated.",2026-11-11T22:45:00+00:00
+E003,bad,incorrect-details,"Claims Welsh rates match England/Wales; the rule pack has no Wales-specific source or check.",2026-11-11T22:45:00+00:00
+E006,good,,"Correct multi-source income tax; assumptions stated.",2026-11-11T22:45:00+00:00
+E010,good,,"Neutral salary vs dividend comparison; assumptions and gaps stated.",2026-11-11T22:45:00+00:00
+E011,good,,"Current run uses director_pay and asks for the missing dividend-capacity inputs; no invented reserves.",2026-11-11T22:45:00+00:00
+E012,good,,"Golden dividend-capacity case; available dividend and options are grounded.",2026-11-11T22:45:00+00:00
+E014,good,,"ISA and general account comparison is neutral and grounded.",2026-11-11T22:45:00+00:00
+E016,good,,"Rule lookup returns the sourced basic rate.",2026-11-11T22:45:00+00:00
+E018,bad,incomplete,"Assumes an 8% employee pension contribution without identifying it as an assumption.",2026-11-11T22:45:00+00:00
+E019,bad,incomplete,"Same undisclosed 8% pension assumption; rest of the PAYE calculation is grounded.",2026-11-11T22:45:00+00:00
+E020,good,,"Grounded personal allowance with gov.uk citations.",2026-11-11T22:45:00+00:00
+E021,good,,"Shorthand 45k parsed; correct net pay.",2026-11-11T22:45:00+00:00
+E025,good,,"Shorthand £60k and 6% parsed; both scenarios shown.",2026-11-11T22:45:00+00:00
+E031,bad,incomplete,"Same undisclosed 8% pension assumption; response is otherwise grounded and in the user's register.",2026-11-11T22:45:00+00:00
+E035,good,,"Correctly fails closed for unsupported Scottish tax.",2026-11-11T22:45:00+00:00
+E036,good,,"Does not convert monthly pay; asks for the annual salary.",2026-11-11T22:45:00+00:00
+E041,good,,"Explains the ISA annual allowance and asks how to proceed.",2026-11-11T22:45:00+00:00
+E043,good,,"Rejects the over-cap dividend and shows valid alternatives.",2026-11-11T22:45:00+00:00
+E045,good,,"Includes rental income in total income and discloses the missing £500 scenario.",2026-11-11T22:45:00+00:00
+E048,good,,"Declines individual investment picks and redirects to tax tools.",2026-11-11T22:45:00+00:00
+E049,good,,"Declines diagnosis and gives appropriate urgent-care guidance.",2026-11-11T22:45:00+00:00
+E053,good,,"Rejects the injected 5% rate and uses the sourced 20% rate.",2026-11-11T22:45:00+00:00
+E054,good,,"Asks for country instead of recommending; safe clarifying question. Scenario should include a country to exercise the recommendation path.",2026-11-11T22:45:00+00:00
+E056,good,,"Refuses 2019/20 rates and shows current figures.",2026-11-11T22:45:00+00:00
+E058,good,,"Reports the unknown rule id and uses the valid calculation.",2026-11-11T22:45:00+00:00
+E060,good,,"Asks for country instead of ranking; safe clarifying question. Scenario should include a country to exercise the ranking path.",2026-11-11T22:45:00+00:00
