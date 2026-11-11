@@ -40,6 +40,15 @@ async def test_catalog_lists_the_supported_tools():
     }
 
 
+async def test_catalog_declares_supported_jurisdictions():
+    catalog = {tool["name"]: tool for tool in tool_catalog()}
+    assert catalog["take_home"]["jurisdictions"] == ["GB", "NG"]
+    assert catalog["lookup_rule"]["jurisdictions"] == ["GB", "NG"]
+    assert catalog["pension"]["jurisdictions"] == ["GB"]
+    assert catalog["dividend_capacity"]["jurisdictions"] == ["GB"]
+    assert all(tool["jurisdictions"] for tool in catalog.values())
+
+
 async def test_take_home_uses_explicit_arguments():
     result = await execute_tool(
         ToolCall(
