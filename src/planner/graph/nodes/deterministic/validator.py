@@ -31,6 +31,7 @@ def validate(state: PlanState) -> dict[str, Any]:
     by_id = {result.result_id: result for result in state.results}
     mismatches: list[str] = []
     citations: list[Citation] = []
+    cited_sources: set[str] = set()
 
     for match in MARKED.finditer(state.report.text):
         result = by_id.get(match["result_id"])
@@ -55,11 +56,13 @@ def validate(state: PlanState) -> dict[str, Any]:
             )
             if citation not in citations:
                 citations.append(citation)
+            if line.source:
+                cited_sources.add(line.source)
 
-    research_urls = {item.url for item in state.research}
+    allowed_urls = {item.url for item in state.research} | cited_sources
     for match in URL.finditer(state.report.text):
         url = match.group().rstrip(".,;:")
-        if url not in research_urls:
+        if url not in allowed_urls:
             mismatches.append(f"uncited source: {url}")
 
     without_urls = URL.sub("", state.report.text)
