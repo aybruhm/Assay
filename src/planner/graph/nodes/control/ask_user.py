@@ -12,4 +12,7 @@ def ask_user(state: PlanState) -> dict[str, Any]:
     answer = interrupt(
         {"kind": "input", "fields": state.missing, "message": state.agent_message}
     )
-    return {"messages": [HumanMessage(content=str(answer))]}
+    return {
+        "messages": [HumanMessage(content=str(answer))],
+        "awaiting_answer": True,
+    }

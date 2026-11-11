@@ -68,6 +68,8 @@ class PlanState(BaseModel):
     messages: Annotated[list[AnyMessage], add_messages] = []
     profile: Profile = Profile()
     missing: list[str] = []
+    # Set while an answer is waiting to be merged back into the profile.
+    awaiting_answer: bool = False
     jurisdiction: str | None = None
     rule_pack: RulePackRef | None = None
     results: list[CalcResult] = []

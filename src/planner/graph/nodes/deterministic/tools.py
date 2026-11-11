@@ -8,6 +8,25 @@ from planner.rules.loader import NoRulePack, load_ref
 from planner.tools.execute import execute_tool
 from planner.tools.specs import ToolContext, ToolError
 
+# These arguments are user facts. They come from the extracted profile, never from a model-supplied tool argument.
+PROFILE_ARGUMENTS = {
+    "annual_growth_rate",
+    "company_profit",
+    "director_salary",
+    "distributable_reserves",
+    "existing_paye_income",
+    "gross_annual",
+    "investment_years",
+    "other_income",
+    "pension_income",
+    "pension_rate",
+    "plan",
+    "rental_income",
+    "salary",
+    "savings_amount",
+    "scottish_taxpayer",
+}
+
 
 def _defaults(state: PlanState) -> dict[str, str | int | bool | None]:
     profile = state.profile
@@ -54,19 +73,29 @@ async def execute_pending(state: PlanState) -> dict[str, Any]:
     records = list(state.tool_records)
 
     for call in state.pending_calls:
+        arguments = {
+            key: value
+            for key, value in call.arguments.items()
+            if key not in PROFILE_ARGUMENTS
+        }
+        grounded = call.model_copy(update={"arguments": arguments})
         try:
-            outcome = await execute_tool(call, context)
+            outcome = await execute_tool(grounded, context)
         except (ToolError, Unsupported) as exc:
             records.append(
-                ToolRecord(name=call.name, arguments=call.arguments, error=exc.reason)
+                ToolRecord(
+                    name=grounded.name,
+                    arguments=grounded.arguments,
+                    error=exc.reason,
+                )
             )
             continue
         if isinstance(outcome, CalcResult):
             results.append(outcome)
             records.append(
                 ToolRecord(
-                    name=call.name,
-                    arguments=call.arguments,
+                    name=grounded.name,
+                    arguments=grounded.arguments,
                     result_id=outcome.result_id,
                 )
             )
@@ -74,8 +103,8 @@ async def execute_pending(state: PlanState) -> dict[str, Any]:
         research_results.extend(outcome)
         records.append(
             ToolRecord(
-                name=call.name,
-                arguments=call.arguments,
+                name=grounded.name,
+                arguments=grounded.arguments,
                 research_ids=[item.research_id for item in outcome],
             )
         )

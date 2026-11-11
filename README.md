@@ -58,7 +58,7 @@ flowchart TD
     agent -->|tool call| tools[tools: run a calculator or research tool]
     tools --> agent
     agent -->|missing input| ask
-    ask --> agent
+    ask -->|answer| intake
     agent -->|enough results| narrate[narrate: explain the figures]
     narrate --> validate[validate: check every figure and the wording]
     narrate -->|rule pack changed| fail
@@ -69,27 +69,15 @@ flowchart TD
     deliver -->|audit write failed| fail
 ```
 
-- **Intake** extracts the country and any facts the user stated. Country and
-  planning date select the rule pack.
-- **Prepare** loads the pack and fails closed when the country or date is not
-  supported.
-- **Agent** reads the conversation, the profile, the tool catalog and the
-  results so far. It either calls tools, asks for a missing input, or says it
-  has enough results.
-- **Tools** run calculators or trusted-source research. A calculator result
-  carries its name, version, inputs and rule ids. A research result carries its
-  title, URL and fetch time.
-- **Narrate** writes the answer from the tool results. Every figure is copied
-  with a citation marker.
-- **Validate** recomputes every displayed figure and rejects wrong numbers,
-  unknown ids, uncited figures or recommendation language. After three attempts
-  the run ends with no figures.
-- **Deliver** writes the audit record. No audit record, no delivery. The
-  audit gateway can also refuse a record, which withholds the report (see
-  [Audit policy](#audit-policy)).
+- **Intake** extracts the country and any facts the user stated, including an answer collected by `ask_user`. Country and planning date select the rule pack.
+- **Prepare** loads the pack and fails closed when the country or date is not supported.
+- **Agent** reads the conversation, the profile, the tool catalog and the results so far. It either calls tools, asks for a missing input, or says it has enough results.
+- **Tools** run calculators or trusted-source research. A calculator result carries its name, version, inputs and rule ids. A research result carries its title, URL and fetch time.
+- **Narrate** writes the answer from the tool results. Every figure is copied with a citation marker.
+- **Validate** recomputes every displayed figure and rejects wrong numbers, unknown ids, uncited figures or recommendation language. After three attempts the run ends with no figures.
+- **Deliver** writes the audit record. No audit record, no delivery. The audit gateway can also refuse a record, which withholds the report (see [Audit policy](#audit-policy)).
 
-The model can call more than one tool. For example, it can compute take-home
-pay for an existing salary and then use that salary in a dividend calculation.
+The model can call more than one tool. For example, it can compute take-home pay for an existing salary and then use that salary in a dividend calculation.
 
 ## Tools
 

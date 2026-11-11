@@ -103,6 +103,56 @@ class TestIntake:
         assert out["profile"].gross_annual == 450_000_000
         assert out["profile"].scottish_taxpayer is False
 
+    async def test_shorthand_amounts_are_parsed(self, monkeypatch):
+        fake = ScriptedModel(
+            extractions=[
+                ProfileExtraction(
+                    country="GB",
+                    gross_annual="45k",
+                    company_profit="100k",
+                    distributable_reserves="33k",
+                    savings_amount="20k",
+                    annual_growth_rate="5%",
+                    investment_years="10 years",
+                    pension_rate="6%",
+                )
+            ]
+        )
+        monkeypatch.setattr(intake_module, "model", lambda: fake)
+        out = await intake_module.intake(
+            _state(profile=Profile(planning_date=date(2026, 10, 1)))
+        )
+        profile = out["profile"]
+        assert profile.gross_annual == 450_000_000
+        assert profile.company_profit == 1_000_000_000
+        assert profile.distributable_reserves == 330_000_000
+        assert profile.savings_amount == 200_000_000
+        assert profile.annual_growth_rate == 500
+        assert profile.investment_years == 10
+        assert profile.pension_rate == 600
+
+    async def test_monthly_amount_is_not_stored_as_annual(self, monkeypatch):
+        fake = ScriptedModel(
+            extractions=[ProfileExtraction(country="GB", gross_annual="3,500 a month")]
+        )
+        monkeypatch.setattr(intake_module, "model", lambda: fake)
+        out = await intake_module.intake(
+            _state(profile=Profile(planning_date=date(2026, 10, 1)))
+        )
+        assert out["profile"].gross_annual is None
+
+    async def test_naira_shorthand_is_parsed(self, monkeypatch):
+        fake = ScriptedModel(
+            extractions=[
+                ProfileExtraction(country="NG", gross_annual="12 million naira")
+            ]
+        )
+        monkeypatch.setattr(intake_module, "model", lambda: fake)
+        out = await intake_module.intake(
+            _state(profile=Profile(planning_date=date(2026, 10, 1)))
+        )
+        assert out["profile"].gross_annual == 120_000_000_000
+
     async def test_a_new_turn_clears_the_previous_tool_results(self, monkeypatch):
         fake = ScriptedModel(extractions=[ProfileExtraction(country="GB")])
         monkeypatch.setattr(intake_module, "model", lambda: fake)
@@ -126,6 +176,32 @@ class TestIntake:
         assert out["research"] == []
         assert out["agent_steps"] == 0
         assert out["next_action"] is None
+
+    async def test_an_answer_updates_the_profile_and_keeps_results(self, monkeypatch):
+        fake = ScriptedModel(
+            extractions=[
+                ProfileExtraction(
+                    country="GB",
+                    gross_annual="45,000",
+                    scottish_taxpayer=False,
+                )
+            ]
+        )
+        monkeypatch.setattr(intake_module, "model", lambda: fake)
+        old_result = CalcResult("abc", "old", "1", {}, [CalcLine("x", 1)])
+        out = await intake_module.intake(
+            _state(
+                profile=Profile(planning_date=date(2026, 10, 1)),
+                awaiting_answer=True,
+                results=[old_result],
+                agent_steps=2,
+            )
+        )
+        assert out["profile"].gross_annual == 450_000_000
+        assert out["profile"].scottish_taxpayer is False
+        assert out["results"] == [old_result]
+        assert out["agent_steps"] == 2
+        assert out["awaiting_answer"] is False
 
 
 class TestPrepare:
@@ -373,6 +449,63 @@ class TestValidator:
         out = validate(state)
         assert out["validation"].status == "passed"
         assert out["report"].citations[0].shown == "20.00%"
+
+    async def test_cited_rule_source_url_passes(self):
+        result = CalcResult(
+            result_id="9f2c1a3b4d5e",
+            calculator="gb.lookup_rule",
+            calculator_version="1",
+            inputs={"rule_id": "gb.income_tax.basic_rate"},
+            lines=[
+                CalcLine(
+                    key="value",
+                    amount=2000,
+                    display_as="rate",
+                    source="https://www.gov.uk/income-tax-rates",
+                )
+            ],
+        )
+        state = _state(
+            results=[result],
+            rule_pack=REF,
+            report=Report(
+                text=(
+                    "The basic rate is 20.00% [r:9f2c1a3b4d5e.value]. "
+                    "Source: https://www.gov.uk/income-tax-rates."
+                )
+            ),
+            validation=Validation(),
+        )
+        out = validate(state)
+        assert out["validation"].status == "passed"
+
+    async def test_uncited_rule_source_url_is_rejected(self):
+        result = CalcResult(
+            result_id="9f2c1a3b4d5e",
+            calculator="gb.lookup_rule",
+            calculator_version="1",
+            inputs={"rule_id": "gb.income_tax.basic_rate"},
+            lines=[
+                CalcLine(
+                    key="value",
+                    amount=2000,
+                    display_as="rate",
+                    source="https://www.gov.uk/income-tax-rates",
+                )
+            ],
+        )
+        state = _state(
+            results=[result],
+            rule_pack=REF,
+            report=Report(text="See https://www.gov.uk/income-tax-rates."),
+            validation=Validation(),
+        )
+        out = validate(state)
+        assert out["validation"].status == "failed"
+        assert any(
+            "uncited source: https://www.gov.uk/income-tax-rates" in mismatch
+            for mismatch in out["validation"].mismatches
+        )
 
     async def test_research_url_passes(self):
         research = ResearchResult(

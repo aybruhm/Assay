@@ -94,7 +94,7 @@ def build() -> StateGraph[PlanState, None, PlanState, PlanState]:
 
     graph.add_edge(START, "intake")
     graph.add_conditional_edges("intake", _after_intake)
-    graph.add_edge("ask_user", "agent")
+    graph.add_edge("ask_user", "intake")
     graph.add_conditional_edges("prepare", _after_prepare)
     graph.add_conditional_edges("agent", _after_agent)
     graph.add_conditional_edges("execute_tools", _after_tools)

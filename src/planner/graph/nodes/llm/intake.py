@@ -76,6 +76,23 @@ async def intake(state: PlanState) -> dict[str, Any]:
     extracted = await model().extract_profile(state.messages)
     profile = _merge(state.profile, extracted)
     missing = [] if profile.country else ["country"]
+    if state.awaiting_answer:
+        return {
+            "profile": profile,
+            "missing": missing,
+            "results": state.results,
+            "research": state.research,
+            "tool_records": state.tool_records,
+            "pending_calls": [],
+            "next_action": None,
+            "agent_message": "",
+            "agent_steps": state.agent_steps,
+            "report": None,
+            "validation": Validation(),
+            "validation_log": [],
+            "failure": None,
+            "awaiting_answer": False,
+        }
     return {
         "profile": profile,
         "missing": missing,
@@ -90,4 +107,5 @@ async def intake(state: PlanState) -> dict[str, Any]:
         "validation": Validation(),
         "validation_log": [],
         "failure": None,
+        "awaiting_answer": False,
     }
