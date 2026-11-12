@@ -1,13 +1,13 @@
 # Assay correctness judge
 
-`scripts/judge_evals.py` grades each labeled response with structured output:
+`scripts/judge_evals.py` grades each labeled response with structured output. The judge returns two fields:
 
-- `reasoning`: a step-by-step check of the question, response and tool context.
+- `reasoning`: a step-by-step check of the question, the response and the tool context.
 - `label`: `good` or `bad`.
 
-The judge sees the question, response, extracted profile, tool calls, research sources and validation result. It never sees the human label or comments.
+The judge sees the question, the response, the extracted profile, the tool calls, the research sources and the validation result. It never sees the human label or the human comments, so the comparison is not contaminated by the answer it is supposed to predict.
 
-The judge ran with `anthropic:claude-opus-5`. Set `JUDGE_MODEL` to pin a different judge model.
+The judge ran with `anthropic:claude-opus-5`. Set `JUDGE_MODEL` to pin a different model.
 
 ## Run
 
@@ -15,17 +15,17 @@ The judge ran with `anthropic:claude-opus-5`. Set `JUDGE_MODEL` to pin a differe
 uv run python scripts/judge_evals.py --prompt v3
 ```
 
-The script compares the judge labels with `labels.csv` and writes:
+The script compares the judge labels with `labels.csv` and writes three files:
 
 - `judge-results-v3.csv`
 - `judge-results-v3.jsonl`
 - `judge-summary-v3.json`
 
-`v1` and `v2` are kept so the prompt iterations can be compared.
+The `v1` and `v2` prompts and their result files are kept so that the iterations can be compared.
 
 ## Results
 
-`bad` is the positive class.
+`bad` is the positive class, because the failures are what matter.
 
 | Prompt | Accuracy | Precision | Recall | TP | FP | FN | TN |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -35,43 +35,43 @@ The script compares the judge labels with `labels.csv` and writes:
 
 ## v1 disagreements
 
-False negatives, where the judge said good but the human said bad:
+V1 missed every failure, and it also flagged four good responses. The false negatives, where the judge said good and the human said bad, were:
 
-- `E003`: accepted the claim that Welsh rates match England and Wales.
-- `E018`, `E019`, `E031`: accepted the Nigeria pension deduction as a stated assumption.
+- `E003`: it accepted the claim that Welsh rates match England and Wales.
+- `E018`, `E019` and `E031`: it accepted the Nigeria pension deduction as a stated assumption.
 
-False positives, where the judge said bad but the human said good:
+The false positives, where the judge said bad and the human said good, were:
 
-- `E036`: expected the agent to convert a monthly salary to annual pay.
-- `E045`: thought the full available dividend was invented because no tool call passed that amount explicitly.
-- `E054`, `E060`: treated the missing-field clarification for country as malformed output.
+- `E036`: it expected the agent to convert a monthly salary into annual pay.
+- `E045`: it thought the full available dividend was invented because no tool call passed that amount explicitly.
+- `E054` and `E060`: it treated a missing-field clarification for the country as malformed output.
 
 ## v2 changes
 
-The second prompt adds guidance from the disagreements:
+The second prompt adds guidance taken directly from those disagreements:
 
 - The Nigeria `take_home` calculator always applies an 8% employee pension contribution. Showing the deduction is not the same as saying it was assumed.
 - The GB rule pack has no Wales-specific rate. A claim that Welsh rates match England without a Wales-specific source is `incorrect-details`.
-- Assay must not convert monthly, weekly, hourly or daily amounts to annual figures. Asking for the annual figure is good.
-- Validation `passed` means every figure matched a calculator result. A `dividend_capacity` call without `dividend_amount` computes the full available dividend.
-- Asking for a missing required field is a valid clarifying question, even when the message is only the field name.
+- Assay must not convert monthly, weekly, hourly or daily amounts into annual figures. Asking for the annual figure is a good response.
+- A validation status of `passed` means every figure matched a calculator result. A `dividend_capacity` call without `dividend_amount` computes the full available dividend, so those figures are not invented.
+- Asking for a missing required field is a valid clarifying question, even when the question is only the field name.
 
-The judge payload also now presents an asked response as a question for the missing fields rather than an empty field list.
+The judge payload also now presents an asked response as a question for the missing fields, rather than as an empty field list.
 
 ## v3 change
 
-A rerun of v2 after the whitespace cleanup produced one false positive on `E020`. The response said "the England, Wales and Northern Ireland rates apply," which is a generic GB rate statement, not a Wales-specific claim. V3 adds this clarification: "A generic statement that the England, Wales and Northern Ireland rates apply is acceptable when the user asked about England and the rule pack is GB; do not treat that as a Wales-specific claim." V3 restored 1.000 accuracy.
+A later run of v2 produced one false positive on `E020`. The response said that the England, Wales and Northern Ireland rates apply. That is a generic GB rate statement, not a claim about Welsh rates. V3 adds this clarification to the prompt: "A generic statement that the England, Wales and Northern Ireland rates apply is acceptable when the user asked about England and the rule pack is GB; do not treat that as a Wales-specific claim." V3 restored accuracy to 1.000.
 
-## Fixed example: E018
+## The fixed example: E018
 
-Human label: bad, `incomplete`.
+The human label is bad, with the category `incomplete`.
 
-v1 said good. It listed the pension line and concluded that the material assumptions were stated, because the response itemised the pension deduction and the rent relief.
+V1 said good. It listed the pension line in the response and concluded that the material assumptions had been stated, because the response itemised the pension deduction and the rent relief.
 
-v2 said bad. It reasoned that the user never mentioned a pension, the response shows an 8% pension deduction, and the response never says that the deduction was assumed. Showing the number is not the same as identifying it as an assumption.
+V2 said bad. It reasoned that the user never mentioned a pension, that the response shows an 8% pension deduction, and that the response never says the deduction was assumed. Showing the number is not the same as identifying it as an assumption.
 
-Outcome changed from `FN` to `TP`.
+The outcome changed from a false negative to a true positive. That is the kind of disagreement the judge prompt is meant to learn from.
 
 ## Caveat
 
-The validation set has 26 labeled responses. V2 was improved against the disagreements in that set, so perfect agreement here is not a guarantee on a holdout set. Re-run the judge when new labels are added or the agent prompt changes.
+The validation set has 26 labeled responses. I improved v2 and v3 against the disagreements in that same set, so perfect agreement here is not a guarantee on a holdout set. Run the judge again when new labels are added or when the agent prompt changes.
